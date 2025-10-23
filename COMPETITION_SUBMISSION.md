@@ -1,7 +1,7 @@
 # 🏆 Universal FHEVM SDK - Competition Submission
 
 **Zama FHEVM SDK Challenge**
-**Submission Date**: October 24, 2025
+ 
 **Repository**: [fhevm-react-template](https://github.com/zama-ai/fhevm-react-template)
 
 ---
