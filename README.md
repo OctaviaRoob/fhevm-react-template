@@ -505,7 +505,7 @@ npm run typecheck
 
 ## 🎥 Video Demo
 
-**Watch the full demonstration**: [demo.mp4](./demo.mp4)
+**Watch the full demonstration**: [demo.mp4]
 
 **Demo Highlights**:
 1. **< 10 Line Setup** (0:00 - 1:30)
