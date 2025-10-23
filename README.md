@@ -16,9 +16,9 @@
 
 ## 🌐 Live Demos
 
-- 🚀 **Next.js Showcase**: [http://localhost:3000](http://localhost:3000)
-- 🚇 **Transit Analytics Example**: [http://localhost:1391](http://localhost:1391)
-- 🎥 **Video Demo**: [demo.mp4](./demo.mp4)
+- 🚀 **Bounty Repository**: [https://github.com/OctaviaRoob/fhevm-react-template](https://github.com/OctaviaRoob/fhevm-react-template)
+- 🚇 **Transit Analytics Example (Live)**: [https://fhe-transit-analytics.vercel.app/](https://fhe-transit-analytics.vercel.app/)
+- 🎥 **Video Demo**: `demo.mp4` (Download to view - video links may not work in browsers)
 
 ---
 
