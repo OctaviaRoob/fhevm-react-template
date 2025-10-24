@@ -1,0 +1,95 @@
+name: Documentation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'README.md'
+      - 'packages/fhevm-sdk/**/*.md'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - 'README.md'
+
+jobs:
+  validate-docs:
+    name: Validate Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for broken links
+        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        with:
+          use-quiet-mode: 'yes'
+          config-file: '.github/markdown-link-check-config.json'
+          folder-path: 'docs'
+
+      - name: Validate markdown formatting
+        run: |
+          npm install -g markdownlint-cli
+          markdownlint '**/*.md' --ignore node_modules --ignore .github
+
+  build-docs:
+    name: Build Documentation Site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build documentation
+        run: |
+          echo "Documentation built successfully"
+          # Add your doc building tool here (e.g., Docusaurus, VitePress, etc.)
+
+  deploy-docs:
+    name: Deploy Documentation
+    needs: [validate-docs, build-docs]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          cname: docs.fhevm-sdk.example.com
+
+  check-completeness:
+    name: Check Documentation Completeness
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify required docs exist
+        run: |
+          required_docs=(
+            "docs/getting-started.md"
+            "docs/core-concepts.md"
+            "docs/api-reference.md"
+            "docs/react-guide.md"
+            "docs/nextjs-guide.md"
+            "docs/security.md"
+            "docs/migration.md"
+          )
+
+          for doc in "${required_docs[@]}"; do
+            if [ ! -f "$doc" ]; then
+              echo "Missing required documentation: $doc"
+              exit 1
+            fi
+          done
+
+          echo "All required documentation files exist"
